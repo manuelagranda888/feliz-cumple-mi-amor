@@ -29,7 +29,7 @@
     .steve {
       width: 100px;
       height: 150px;
-      background-image: url('https://raw.githubusercontent.com/IngoBerger/Minecraft-Steve-Walking-Sprite/master/steve_walk.png');
+      background-image: url('steve_walk.png');
       background-size: 400px 150px;
       animation: walk 1s steps(4) infinite;
       margin-bottom: 20px;
@@ -44,7 +44,7 @@
     .chest {
       width: 120px;
       height: 85px;
-      background-image: url('https://raw.githubusercontent.com/IngoBerger/Minecraft-Chest-Sprite/master/chest.png');
+      background-image: url('chest.png');
       background-size: 240px 85px;
       cursor: pointer;
       margin: 20px 0;
@@ -112,69 +112,4 @@
   <div class="message" id="loveMessage">
     En este mundo de bloques y código,<br>
     tú eres mi spawn point favorito.<br><br>
-    Cada día contigo es como encontrar diamantes<br>
-    en la primera capa... ¡imposible y mágico!<br><br>
-    Te amo más que a un Ender Dragon derrotado.<br>
-    — Tu programadora favorita ❤️
-  </div>
-
-  <div class="footer">
-    Hecho con ❤️ y bloques de comandos
-  </div>
-
-  <!-- Sonido de cofre (sonido estilo Minecraft, libre de derechos) -->
-  <audio id="chestSound" src="https://www.soundjay.com/misc/sounds/chest-open-1.mp3" preload="auto"></audio>
-
-  <script>
-    const chest = document.getElementById('minecraftChest');
-    const message = document.getElementById('loveMessage');
-    const audio = document.getElementById('chestSound');
-    let isOpen = false;
-
-    // Crear corazón flotante
-    function createHeart(x, y) {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.innerHTML = '❤️';
-      heart.style.left = `${x}px`;
-      heart.style.top = `${y}px`;
-      document.body.appendChild(heart);
-
-      // Eliminar después de la animación
-      setTimeout(() => {
-        heart.remove();
-      }, 2000);
-    }
-
-    chest.addEventListener('click', function() {
-      // Reproducir sonido
-      audio.currentTime = 0;
-      audio.play().catch(e => console.log("Audio no reproducido:", e));
-
-      if (!isOpen) {
-        // Abrir cofre
-        chest.classList.add('open');
-        message.style.display = 'block';
-        isOpen = true;
-
-        // Crear varios corazones desde el cofre
-        const rect = chest.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        for (let i = 0; i < 12; i++) {
-          setTimeout(() => {
-            const offsetX = (Math.random() - 0.5) * 100;
-            createHeart(centerX + offsetX, centerY);
-          }, i * 100);
-        }
-      } else {
-        // Cerrar cofre
-        chest.classList.remove('open');
-        message.style.display = 'none';
-        isOpen = false;
-      }
-    });
-  </script>
-</body>
-</html>
+    Cada día
