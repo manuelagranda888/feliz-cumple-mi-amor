@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feliz Cumpleaños, mi amor!</title>
+  <style>
+    body {
+      background-image: url('https://i.imgur.com/W2rc8YH.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: 'Press Start 2P', cursive, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+      text-align: center;
+      text-shadow: 2px 2px 0 #000;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+    .steve {
+      width: 100px;
+      height: 150px;
+      background-image: url('https://raw.githubusercontent.com/IngoBerger/Minecraft-Steve-Walking-Sprite/master/steve_walk.png');
+      background-size: 400px 150px;
+      animation: walk 1s steps(4) infinite;
+      margin-bottom: 20px;
+      image-rendering: pixelated;
+    }
+
+    @keyframes walk {
+      0% { background-position: 0 0; }
+      100% { background-position: -400px 0; }
+    }
+
+    .chest {
+      width: 120px;
+      height: 85px;
+      background-image: url('https://raw.githubusercontent.com/IngoBerger/Minecraft-Chest-Sprite/master/chest.png');
+      background-size: 240px 85px;
+      cursor: pointer;
+      margin: 20px 0;
+      image-rendering: pixelated;
+      transition: transform 0.2s;
+    }
+
+    .chest.open {
+      background-position: -120px 0;
+    }
+
+    .chest:hover {
+      transform: scale(1.05);
+    }
+
+    .message {
+      background: rgba(245, 245, 220, 0.92);
+      color: #333;
+      padding: 20px;
+      border: 4px solid #5d4037;
+      border-radius: 8px;
+      max-width: 90%;
+      display: none;
+      margin-top: 20px;
+      font-size: 12px;
+      line-height: 1.4;
+      text-shadow: none;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 10px;
+      color: #fff;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      pointer-events: none;
+      opacity: 0;
+      animation: floatUp 2s forwards;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) scale(1.2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Feliz Cumpleaños, mi amor!</h2>
+  
+  <div class="steve"></div>
+
+  <!-- Cofre interactivo -->
+  <div class="chest" id="minecraftChest"></div>
+
+  <div class="message" id="loveMessage">
+    En este mundo de bloques y código,<br>
+    tú eres mi spawn point favorito.<br><br>
+    Cada día contigo es como encontrar diamantes<br>
+    en la primera capa... ¡imposible y mágico!<br><br>
+    Te amo más que a un Ender Dragon derrotado.<br>
+    — Tu programadora favorita ❤️
+  </div>
+
+  <div class="footer">
+    Hecho con ❤️ y bloques de comandos
+  </div>
+
+  <!-- Sonido de cofre (sonido estilo Minecraft, libre de derechos) -->
+  <audio id="chestSound" src="https://www.soundjay.com/misc/sounds/chest-open-1.mp3" preload="auto"></audio>
+
+  <script>
+    const chest = document.getElementById('minecraftChest');
+    const message = document.getElementById('loveMessage');
+    const audio = document.getElementById('chestSound');
+    let isOpen = false;
+
+    // Crear corazón flotante
+    function createHeart(x, y) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '❤️';
+      heart.style.left = `${x}px`;
+      heart.style.top = `${y}px`;
+      document.body.appendChild(heart);
+
+      // Eliminar después de la animación
+      setTimeout(() => {
+        heart.remove();
+      }, 2000);
+    }
+
+    chest.addEventListener('click', function() {
+      // Reproducir sonido
+      audio.currentTime = 0;
+      audio.play().catch(e => console.log("Audio no reproducido:", e));
+
+      if (!isOpen) {
+        // Abrir cofre
+        chest.classList.add('open');
+        message.style.display = 'block';
+        isOpen = true;
+
+        // Crear varios corazones desde el cofre
+        const rect = chest.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        for (let i = 0; i < 12; i++) {
+          setTimeout(() => {
+            const offsetX = (Math.random() - 0.5) * 100;
+            createHeart(centerX + offsetX, centerY);
+          }, i * 100);
+        }
+      } else {
+        // Cerrar cofre
+        chest.classList.remove('open');
+        message.style.display = 'none';
+        isOpen = false;
+      }
+    });
+  </script>
+</body>
+</html>
